@@ -1,0 +1,65 @@
+cd ~
+git clone https://github.com/mirenzh1/datasci350-quiz01.git
+cd datasci350-quiz01
+touch commands.txt
+git switch -c station-upgrade
+mkdir results
+touch results/summary.md
+echo "Analysis of the first field season." >> results/summary.md
+git add results
+git commit -m "Add results directory"
+mv data/sensor-readings.csv data/station-data.csv
+mkdir scripts/archive && cp scripts/*.py scripts/archive/
+rm docs/notes.md
+git add .
+git commit -m "Update station files"
+touch .gitignore
+echo "temp/" >> .gitignore
+echo "log?.txt" >> .gitignore
+cat .gitignore
+git add .gitignore && git commit -m "Add gitignore"
+touch log{1..4}.txt
+git status
+On branch station-upgrade
+nothing to commit, working tree clean
+The log files do not appear because the .gitignore pattern log?.txt ignores filenames containing one character between "log" and ".txt".
+wc -l < data/station-data.csv >> results/summary.md
+nano scripts/03-plot.py
+git diff
+diff --git a/results/summary.md b/results/summary.md
+index 295821a..817eec6 100644
+--- a/results/summary.md
++++ b/results/summary.md
+@@ -1 +1,2 @@
+ Analysis of the first field season.
++      41
+diff --git a/scripts/03-plot.py b/scripts/03-plot.py
+index 70ea841..5943997 100644
+--- a/scripts/03-plot.py
++++ b/scripts/03-plot.py
+@@ -1,3 +1,4 @@
++# Reviewed for the field season report.
+ # Plot the daily temperature readings
+ # Prints a simple text chart, one bar per reading.
+Lines beginning with + represent the lines added in the new version compared with the old version.
+git add .
+git commit -m "Update analyss"
+git commit --amend -m "Update analysis"
+git add commands.txt && git commit -m "Save command log before merge"
+git switch main
+git merge station-upgrade
+git log --oneline
+6af9c1c (HEAD -> main) Save command log before merge
+a527efa (station-upgrade) Update analysis
+e0423f3 Add gitignore
+1ac50b7 Update station files
+f9c0fff Add results directory
+a22b29e (origin/main, origin/HEAD) docs(readme): note committing commands.txt before task 18 and force push for bonus 2
+b645f85 feat: quiz 01 starter files
+gh pr create --repo danilofreire/datasci350-quiz01 --base main --head mirenzh1:main
+git log --oneline -2
+git rebase -i HEAD~2
+Changed the second commit from pick to squash.
+Combined the last two commits into one commit.
+git log --oneline -5
+git push --force origin main
